@@ -22,14 +22,13 @@ public class GetStudentMain {
 			session.beginTransaction();
 
 			List<Student> students = session.createQuery("from Student").getResultList();
-			for (Student tempStudent : students){
-				System.out.println("Retrieved student: " + tempStudent);
-			}
+			displayStudents(students);
 			System.out.println("\n\n");
 			students = session.createQuery("from Student s where s.email like '%com'").getResultList();		
-			for (Student tempStudent : students){
-				System.out.println("Retrieved student: " + tempStudent);
-			}
+			displayStudents(students);
+			System.out.println("\n\n");
+			students = session.createQuery("from Student s where s.firstName like 'First%' or s.lastName like 'Last%'").getResultList();		
+			displayStudents(students);
 			
 			session.getTransaction().commit();
 		} finally {
@@ -37,6 +36,12 @@ public class GetStudentMain {
 		}
 
 		
+	}
+
+	private static void displayStudents(List<Student> students) {
+		for (Student tempStudent : students){
+			System.out.println("Retrieved student: " + tempStudent);
+		}
 	}
 
 }
